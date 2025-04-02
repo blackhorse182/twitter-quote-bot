@@ -17,14 +17,14 @@ const client = new TwitterApi({
 const hashtags = "#CitationDuJour #Motivation #Inspiration";
 
 async function getRandomQuote() {
-  try {
-    const response = await axios.get('https://api.quotable.io/random');
-    return `${response.data.content} - ${response.data.author}`;
-  } catch (error) {
-    console.error("Erreur lors de la récupération de la citation :", error);
-    return "La vie est un mystère qu'il faut vivre. - Gandhi";
+    try {
+      const response = await axios.get('https://api.quotable.io/random');
+      return `${response.data.content} - ${response.data.author}`;
+    } catch (error) {
+      console.error("Erreur lors de la récupération de la citation :", error.message, error.response ? error.response.data : null);
+      return "La vie est un mystère qu'il faut vivre. - Gandhi";
+    }
   }
-}
 
 async function postQuote() {
   const quote = await getRandomQuote();
