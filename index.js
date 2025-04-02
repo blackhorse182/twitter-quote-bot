@@ -5,7 +5,7 @@ const express = require('express');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Bot démarré sur le port ${PORT}! Posts toutes les 6 heures.`);
