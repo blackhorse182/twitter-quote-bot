@@ -6,6 +6,10 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Bot démarré sur le port ${PORT}! Posts toutes les 6 heures.`);
+});
 const client = new TwitterApi({
     appKey: 'MQnQJz6JfQ6FdbhGjmsgtN5aE', // Remplace par ta vraie API Key
     appSecret: 'MO4J0paVS0kvmPvSh715OjDU5R8cjJuWlOPN6Zz5JDPZqgmb5G',         // Remplace par ton vrai API Secret
