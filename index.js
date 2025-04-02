@@ -56,19 +56,5 @@ const client = new TwitterApi({
   });
   
   postQuote();
-  
-  app.get('/', (req, res) => {
-    res.send('Twitter Quote Bot is running!');
-  });
-  
-  app.listen(PORT, () => {
-    console.log(`Bot démarré sur le port ${PORT}! Posts toutes les 6 heures.`);
-  });
-// Schedule every 6 hours
-schedule.scheduleJob('0 */6 * * *', () => {
-  postQuote();
-});
-
-// Test on startup
-postQuote();
+  console.log("Bot démarré ! Posts toutes les 6 heures.");
 
