@@ -72,11 +72,3 @@ schedule.scheduleJob('0 */6 * * *', () => {
 // Test on startup
 postQuote();
 
-// Keep Render alive
-app.get('/', (req, res) => {
-  res.send('Twitter Quote Bot is running!');
-});
-
-app.listen(PORT, () => {
-  console.log(`Bot démarré sur le port ${PORT}! Posts toutes les 6 heures.`);
-});
