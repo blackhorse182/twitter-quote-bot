@@ -1,9 +1,11 @@
 const { TwitterApi } = require('twitter-api-v2');
 const schedule = require('node-schedule');
 const axios = require('axios');
+const express = require('express');
+require('dotenv').config();
 
-// Configuration du client Twitter avec variables d'environnement
-
+const app = express();
+const PORT = process.env.PORT || 3000;
 const client = new TwitterApi({
     appKey: 'MQnQJz6JfQ6FdbhGjmsgtN5aE', // Remplace par ta vraie API Key
     appSecret: 'MO4J0paVS0kvmPvSh715OjDU5R8cjJuWlOPN6Zz5JDPZqgmb5G',         // Remplace par ton vrai API Secret
@@ -14,27 +16,24 @@ const client = new TwitterApi({
 // Hashtags pertinents
 const hashtags = "#CitationDuJour #Motivation #Inspiration";
 
-// Récupérer une citation aléatoire depuis Quotable
 async function getRandomQuote() {
   try {
     const response = await axios.get('https://api.quotable.io/random');
-    const quote = response.data.content;
-    const author = response.data.author;
-    return `${quote} - ${author}`;
+    return `${response.data.content} - ${response.data.author}`;
   } catch (error) {
     console.error("Erreur lors de la récupération de la citation :", error);
-    return "La vie est un mystère qu'il faut vivre. - Gandhi"; // Citation de secours
+    return "La vie est un mystère qu'il faut vivre. - Gandhi";
   }
 }
 
-// Poster la citation
 async function postQuote() {
   const quote = await getRandomQuote();
-  const tweet = `${quote} ${hashtags}`;
+  const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const tweet = `${quote} ${hashtags} [${timestamp}]`;
 
   try {
     if (tweet.length > 280) {
-      const shortQuote = `${quote.substring(0, 280 - hashtags.length - 3)}... ${hashtags}`;
+      const shortQuote = `${quote.substring(0, 280 - hashtags.length - timestamp.length - 5)}... ${hashtags} [${timestamp}]`;
       await client.v2.tweet(shortQuote);
       console.log(`Tweet raccourci posté : ${shortQuote}`);
     } else {
@@ -46,11 +45,19 @@ async function postQuote() {
   }
 }
 
-// Planifier un post toutes les 6 heures
+// Schedule every 6 hours
 schedule.scheduleJob('0 */6 * * *', () => {
   postQuote();
 });
 
-// Tester au démarrage
+// Test on startup
 postQuote();
-console.log("Bot démarré ! Posts toutes les 6 heures.");
+
+// Keep Render alive
+app.get('/', (req, res) => {
+  res.send('Twitter Quote Bot is running!');
+});
+
+app.listen(PORT, () => {
+  console.log(`Bot démarré sur le port ${PORT}! Posts toutes les 6 heures.`);
+});
