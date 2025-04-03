@@ -3,7 +3,8 @@ const schedule = require('node-schedule');
 const axios = require('axios');
 require('dotenv').config();
 
-
+const app = express(); // Create an Express app
+const PORT = process.env.PORT || 3000; // Use the platform's port or default to 3000
 
 
 const client = new TwitterApi({
@@ -58,3 +59,12 @@ const client = new TwitterApi({
   postQuote();
   console.log("Bot démarré ! Posts toutes les 6 heures.");
 
+
+// Start a simple web server
+app.get('/', (req, res) => {
+    res.send('Twitter Quote Bot is running!');
+});
+
+app.listen(PORT, () => {
+    console.log(`Bot démarré ! Posts toutes les 6 heures. Server running on port ${PORT}`);
+});
