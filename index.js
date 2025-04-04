@@ -62,7 +62,7 @@ const client = new TwitterApi({
 
 
 // Start a simple web server
-app.get('/', (req, res) => {
+app.get('/run', (req, res) => {
     res.send('Twitter Quote Bot is running!');
 });
 
