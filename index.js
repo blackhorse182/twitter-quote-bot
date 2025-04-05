@@ -9,10 +9,10 @@ const PORT = process.env.PORT || 3000; // Use the platform's port or default to 
 
 
 const client = new TwitterApi({
-    appKey: 'MQnQJz6JfQ6FdbhGjmsgtN5aE', // Remplace par ta vraie API Key
-    appSecret: 'MO4J0paVS0kvmPvSh715OjDU5R8cjJuWlOPN6Zz5JDPZqgmb5G',         // Remplace par ton vrai API Secret
-    accessToken: '1509015998317404161-0PtKc05VWPikCLXyKtXvIIo5IQ8GUF',    // Ton Access Token
-    accessSecret: 'ejdT2uFYLQXFvHM1rkoJXe6U2FX0PHTqWjgqVQhm3EmoL',  // Ton Access Secret
+    appKey: process.env.TWITTER_APP_KEY, // Replace with your actual API Key from environment variables
+    appSecret: process.env.TWITTER_APP_SECRET, // Replace with your actual API Secret from environment variables
+    accessToken: process.env.TWITTER_ACCESS_TOKEN, // Your Access Token from environment variables
+    accessSecret: process.env.TWITTER_ACCESS_SECRET, // Your Access Secret from environment variables
   });
 
   const hashtags = "#CitationDuJour #Motivation #Inspiration";
